@@ -17,16 +17,27 @@ namespace WireMock.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var wiremock = WireMockServer.Start(5000,true);
+            var foo = new Foo
+            {
+                Prop1 = 1,
+                Prop2 = nameof(Foo)
+            };
 
-            wiremock.Given(Request.Create().WithPath("/demo").UsingGet())
-                .RespondWith(Response.Create().WithBodyAsJson(new Foo { Prop1 = 1, Prop2 = nameof(Foo) }, Encoding.UTF8, true));
+            var wireMockServer = WireMockServer.Start(port: 5000, ssl: false);
             
-            Console.WriteLine($"Server started at {wiremock.Urls[0]}");
+            wireMockServer.Given(Request.Create()
+                    .WithPath("/demo")
+                    .UsingGet())
+                .RespondWith(Response.Create()
+                    .WithBodyAsJson(body: foo,
+                                    encoding: Encoding.UTF8,
+                                    indented: true));
+            
+            Console.WriteLine($"Server started at {wireMockServer.Urls[0]}");
             
             Console.ReadKey();
-            wiremock.Stop();
-            wiremock.Dispose();
+            wireMockServer.Stop();
+            wireMockServer.Dispose();
         }
     }
 }
