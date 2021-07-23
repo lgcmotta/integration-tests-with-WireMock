@@ -32,13 +32,15 @@ class Program
         // ssl: true will give you https://localhost:5000/
         // ssl: false will give you http://localhost:5000/
 
-        wireMockServer.Given(Request.Create()
-                .WithPath("/demo")
-                .UsingGet())
-            .RespondWith(Response.Create()
-                .WithBodyAsJson(body: foo,
-                                encoding: Encoding.UTF8,
-                                indented: true));
+        // configure the request
+            wireMockServer.Given(Request.Create()
+                    .WithPath("/demo")
+                    .UsingGet())
+                // configure the response
+                .RespondWith(Response.Create()
+                    .WithBodyAsJson(body: foo,
+                                    encoding: Encoding.UTF8,
+                                    indented: true));
 
         Console.WriteLine($"Server started at {wireMockServer.Urls[0]}");
 
