@@ -28,7 +28,9 @@ class Program
             Prop2 = nameof(Foo)
         };
 
-        var wireMockServer = WireMockServer.Start(port: 5000, ssl: true);
+        var wireMockServer = WireMockServer.Start(port: 5000, ssl: false);
+        // ssl: true will give you https://localhost:5000/
+        // ssl: false will give you http://localhost:5000/
 
         wireMockServer.Given(Request.Create()
                 .WithPath("/demo")
